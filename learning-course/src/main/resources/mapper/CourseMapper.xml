@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.sju.ws.learning.course.mapper.CourseMapper">
+
+    <!-- 分页查询课程 -->
+    <select id="selectCoursePage" resultType="cn.sju.ws.learning.course.entity.Course">
+        SELECT c.*
+        FROM course c
+        <if test="categoryId != null">
+            LEFT JOIN category_course cc ON c.id = cc.course_id
+        </if>
+        <where>
+            <if test="name != null and name != ''">
+                AND c.name LIKE CONCAT('%', #{name}, '%')
+            </if>
+            <if test="categoryId != null">
+                AND cc.category_id = #{categoryId}
+            </if>
+            <if test="userName != null and userName != ''">
+                AND c.user_name = #{userName}
+            </if>
+            <if test="approved != null">
+                AND c.approved = #{approved}
+            </if>
+        </where>
+        GROUP BY c.id
+        ORDER BY c.create_time DESC
+    </select>
+</mapper>

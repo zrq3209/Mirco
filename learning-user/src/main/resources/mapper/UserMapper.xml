@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.sju.ws.learning.user.mapper.UserMapper">
+
+    <!-- 分页查询用户信息 -->
+    <select id="selectUserPage" resultType="cn.sju.ws.learning.common.entity.User">
+        SELECT * FROM user
+        <where>
+            <if test="username != null and username != ''">
+                AND username LIKE CONCAT('%', #{username}, '%')
+            </if>
+            <if test="fullName != null and fullName != ''">
+                AND full_name LIKE CONCAT('%', #{fullName}, '%')
+            </if>
+            <if test="roleId != null">
+                AND role_id = #{roleId}
+            </if>
+        </where>
+        ORDER BY create_time DESC
+    </select>
+</mapper>

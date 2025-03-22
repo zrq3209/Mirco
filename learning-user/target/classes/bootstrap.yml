@@ -1,0 +1,16 @@
+spring:
+  application:
+    name: learning-user
+  profiles:
+    active: dev
+  cloud:
+    nacos:
+      server-addr: localhost:8848
+      discovery:
+        namespace: public
+      config:
+        namespace: public
+        file-extension: yml
+        shared-configs:
+          - data-id: common-${spring.profiles.active}.yml
+            refresh: true
